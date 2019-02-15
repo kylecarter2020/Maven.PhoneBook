@@ -30,9 +30,10 @@ public class PhoneBookTest {
         PhoneBook phoneBook = new PhoneBook();
 
         //When
+        boolean expected = phoneBook.hasEntry();
 
         //Then
-        Assert.assertFalse(actual);
+        Assert.assertFalse(expected);
 
     }
 
@@ -120,7 +121,7 @@ public class PhoneBookTest {
         ArrayList<String> expected = new ArrayList<String>();
         expected.add(name);
         expected.add(number);
-        ArrayList<String> actual = phoneBook.getArraylistFor(name);
+        ArrayList<String> actual = phoneBook.getArrayListFor(name);
 
         //Then
         Assert.assertEquals(expected, actual);
