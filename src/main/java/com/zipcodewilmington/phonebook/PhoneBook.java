@@ -1,5 +1,7 @@
 package com.zipcodewilmington.phonebook;
 
+import javafx.beans.binding.StringBinding;
+
 import java.util.*;
 
 /**
@@ -53,23 +55,49 @@ public class PhoneBook {
     }
 
     public String lookup(String name) {
-        return null;
+        String result = "";
+
+        result += map.get(name).toString() + "\n";
+
+        result = result.replace("[", "");
+        result = result.replace("]", "");
+
+        return result;
     }
 
-    public String[] lookupNumberFor(String name2) {
-        return null;
+
+    public String reverseLookup(String number) {
+        String result = "";
+        boolean found = false;
+
+        for (String key : map.keySet()) {
+            if(map.get(key).contains(number)) {
+                result += key + "\n";
+                found = true;
+            }
+        }
+        if(!found)
+        {
+            result += "No entries found.\n";
+        }
+        return result;
     }
 
-    public String reverseLookup(String s) {
-        return null;
-    }
-
-    public String[] remove(String name, String s) {
-        return null;
+    public void remove(String name, String number) {
+        ArrayList<String> nums = map.get(name);
+        nums.remove(number);
+        map.put(name, nums);
     }
 
     public String listNames() {
-        return null;
+
+        String result = "";
+
+        for (String key : map.keySet()) {
+            result += key + "\n";
+        }
+
+        return result;
     }
 
 }

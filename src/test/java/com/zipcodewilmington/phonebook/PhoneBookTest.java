@@ -52,7 +52,7 @@ public class PhoneBookTest {
 
         //When
         phoneBook.add(name, number);
-        String expected = name + " " + number;
+        String expected = name + " " + number + "\n";
         String actual = phoneBook.listNamesAndNumbers();
 
         //Then
@@ -70,7 +70,7 @@ public class PhoneBookTest {
         //When
         phoneBook.add(name, number);
         phoneBook.add(name, number2);
-        String expected = name + " " + number + ", " + number2;
+        String expected = name + " " + number2 + ", " + number + "\n";
         String actual = phoneBook.listNamesAndNumbers();
 
         //Then
@@ -89,7 +89,7 @@ public class PhoneBookTest {
         //When
         phoneBook.add(name, number);
         phoneBook.add(name2, number2);
-        String expected = name + " " + number + "\n" + name2 + " " + number2;
+        String expected = name2 + " " + number2 + "\n" + name + " " + number + "\n";
         String actual = phoneBook.listNamesAndNumbers();
 
         //Then
@@ -105,7 +105,7 @@ public class PhoneBookTest {
 
         //When
         phoneBook.add(name, number);
-        String expected = name + " " + number[0] + ", " + number[1];
+        String expected = name + " " + number[0] + ", " + number[1] + ", " + number[2]+ "\n";
         String actual = phoneBook.listNamesAndNumbers();
 
         //Then
@@ -124,7 +124,7 @@ public class PhoneBookTest {
         phoneBook.add(name2, number2);
 
         //When
-        ArrayList<String> expected = new ArrayList<String>();
+        ArrayList<String> expected = new ArrayList<>();
         expected.addAll(Arrays.asList(number2));
         ArrayList<String> actual = phoneBook.getArrayListFor(name2);
 
@@ -145,30 +145,11 @@ public class PhoneBookTest {
         //When
         phoneBook.add(name, number);
         phoneBook.add(name2, number2);
-        String expected = name + " " + number;
+        String expected = number + "\n";
         String actual = phoneBook.lookup(name);
 
         //Then
         Assert.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testLookupNumbersFor(){
-        //Given
-        PhoneBook phoneBook = new PhoneBook();
-        String name = "Joe";
-        String[] number = new String[]{"302-555-5555","302-333-3333"};
-        String name2 = "Bob";
-        String[] number2 = new String[]{"302-444-4444","302-222-2222"};
-
-
-        //When
-        phoneBook.add(name, number);
-        phoneBook.add(name2, number2);
-        String[] actual = phoneBook.lookupNumberFor(name2);
-
-        //Then
-        Assert.assertArrayEquals(number2, actual);
     }
 
     @Test
@@ -179,14 +160,15 @@ public class PhoneBookTest {
         String[] number = new String[]{"302-555-5555","302-333-3333"};
         String name2 = "Bob";
         String[] number2 = new String[]{"302-444-4444","302-222-2222"};
-
-        //When
         phoneBook.add(name, number);
         phoneBook.add(name2, number2);
+
+        //When
+        String expected = name + "\n";
         String actual = phoneBook.reverseLookup("302-333-3333");
 
         //Then
-        Assert.assertEquals(name, actual);
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
@@ -195,14 +177,15 @@ public class PhoneBookTest {
         PhoneBook phoneBook = new PhoneBook();
         String name = "Joe";
         String[] number = new String[]{"302-555-5555","302-333-3333", "302-444-4444"};
+        phoneBook.add(name, number);
 
         //When
-        phoneBook.add(name, number);
-        String[] expected = new String[]{"302-555-5555", "302-444-4444"};
-        String[] actual = phoneBook.remove(name, "302-333-3333");
+        phoneBook.remove(name, "302-333-3333");
+        String expected = "302-555-5555, 302-444-4444\n";
+        String actual = phoneBook.lookup(name);
 
         //Then
-        Assert.assertArrayEquals(expected, actual);
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
@@ -236,7 +219,7 @@ public class PhoneBookTest {
         //When
         phoneBook.add(name, number);
         phoneBook.add(name2, number2);
-        String expected = name + "\n" + name2;
+        String expected = name2 + "\n" + name + "\n";
         String actual = phoneBook.listNames();
 
         //Then
@@ -256,7 +239,7 @@ public class PhoneBookTest {
 
         //When
         phoneBook.removeRecord(name2);
-        String expected = name + " " + number[0] + ", " + number[1];
+        String expected = name + " " + number[0] + ", " + number[1] + "\n";
         String actual = phoneBook.listNamesAndNumbers();
 
         //Then
