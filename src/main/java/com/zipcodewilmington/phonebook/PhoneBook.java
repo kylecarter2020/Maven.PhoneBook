@@ -1,30 +1,55 @@
 package com.zipcodewilmington.phonebook;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Created by leon on 1/23/18.
  */
 public class PhoneBook {
-    public void add(String name, String number) {
+
+    private SortedMap<String, ArrayList<String>> map;
+    private ArrayList<String> number;
+
+    public PhoneBook(){
+        map = new TreeMap<>();
     }
 
-    public void add(String name, String[] number) {
+    public void add(String name, String... number) {
+        this.number = new ArrayList<>(Arrays.asList(number));
+
+        if(hasEntry(name))
+        {
+            this.number.addAll(getArrayListFor(name));
+        }
+
+        map.put(name, this.number);
+
     }
 
-    public void removeRecord(String name2) {
+    public void removeRecord(String name) {
+        map.remove(name);
     }
 
-    public boolean hasEntry() {
-        return  false;
+    public boolean hasEntry(String name) {
+
+        return map.containsKey(name);
     }
 
     public String listNamesAndNumbers() {
-        return null;
+        String result = "";
+
+        for (String key : map.keySet()) {
+            result += key + " " + map.get(key).toString() + "\n";
+        }
+
+        result = result.replace("[", "");
+        result = result.replace("]", "");
+
+        return result;
     }
 
     public ArrayList<String> getArrayListFor(String name) {
-        return null;
+        return map.get(name);
     }
 
     public String lookup(String name) {

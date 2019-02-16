@@ -1,6 +1,8 @@
 package com.zipcodewilmington.phonebook;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,7 +22,7 @@ public class PhoneBookTest {
         phoneBook.add(name, number);
 
         //Then
-        Assert.assertTrue(phoneBook.hasEntry());
+        Assert.assertTrue(phoneBook.hasEntry(name));
 
     }
 
@@ -28,9 +30,13 @@ public class PhoneBookTest {
     public void testHasEntryFalse(){
         //Given
         PhoneBook phoneBook = new PhoneBook();
+        String name = "Joe";
+        String number = "302-555-5555";
+        String name2 = "Bob";
+        phoneBook.add(name, number);
 
         //When
-        boolean expected = phoneBook.hasEntry();
+        boolean expected = phoneBook.hasEntry(name2);
 
         //Then
         Assert.assertFalse(expected);
@@ -119,9 +125,8 @@ public class PhoneBookTest {
 
         //When
         ArrayList<String> expected = new ArrayList<String>();
-        expected.add(name);
-        expected.add(number);
-        ArrayList<String> actual = phoneBook.getArrayListFor(name);
+        expected.addAll(Arrays.asList(number2));
+        ArrayList<String> actual = phoneBook.getArrayListFor(name2);
 
         //Then
         Assert.assertEquals(expected, actual);
@@ -212,7 +217,7 @@ public class PhoneBookTest {
         //When
         phoneBook.add(name, number);
         phoneBook.add(name2, number2);
-        String expected = name + " " + number[0] + ", " + number[1] + "\n" + name2 + " " + number2[0] + ", " + number2[1];
+        String expected = name2 + " " + number2[0] + ", " + number2[1] + "\n" + name + " " + number[0] + ", " + number[1] + "\n";
         String actual = phoneBook.listNamesAndNumbers();
 
         //Then
